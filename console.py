@@ -4,6 +4,7 @@
 """
 from cmd import Cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import shlex
 
@@ -35,12 +36,13 @@ class HBNBCommand(Cmd):
         print('Ctrl + D to exit the program\n')
 
     def do_create(self, s):
-        """Create a BaseModel instance, print its id and save it"""
+        """Create an instance, print its id and save it"""
         list = s.split()
+        list_class = ['BaseModel', 'User']
         if len(list) < 1:
             print('** class name missing **')
-        elif list[0] == 'BaseModel':
-            my_model = BaseModel()
+        elif list[0] in list_class:
+            my_model = eval(list[0])()
             my_model.save()
             print(my_model.id)
         else:
@@ -48,23 +50,24 @@ class HBNBCommand(Cmd):
 
     def help_create(self):
         """Informations about create"""
-        print('Create a BaseModel instance, print its id and save it\n')
+        print('Create an instance, print its id and save it\n')
 
     def do_show(self, s):
         """Show string representation of an instance"""
+        list_class =['BaseModel', 'User']
         my_list = s.split()
         my_dict = storage.all()
         check = 0
         if len(my_list) == 0:
             print("** class name missing **")
-        elif len(my_list) == 1 and my_list[0] == "BaseModel":
+        elif len(my_list) == 1 and my_list[0] in list_class:
             print("** instance id missing **")
-        elif my_list[0] != "BaseModel":
+        elif my_list[0] not in list_class:
             print("** class doesn't exist **")
         else:
-            for key, value in my_dict.copy().items():
-                if key == f"BaseModel.{my_list[1]}":
-                    print(value)
+            for k, v in my_dict.copy().items():
+                if k == f"{v.__class__.__name__}.{my_list[1]}":
+                    print(v)
                     check = 1
             if check == 0:
                 print('** no instance found **')
@@ -77,17 +80,18 @@ class HBNBCommand(Cmd):
         """Destroy an instance with its id"""
         list = s.split()
         dict = storage.all()
+        list_class = ['BaseModel', 'User']
         check = 0
         if len(list) == 0:
             print("** class name missing **")
-        elif list[0] != 'BaseModel':
+        elif list[0] not in list_class:
             print("** class doesn't exist **")
         elif len(list) == 1:
             print("** instance id missing **")
         else:
-            for key, value in dict.copy().items():
-                if key == f"BaseModel.{list[1]}":
-                    dict.pop(key)
+            for k, v in dict.copy().items():
+                if k == f"{v.__class__.__name__}.{list[1]}":
+                    dict.pop(k)
                     storage.save()
                     check = 1
             if check == 0:
@@ -99,13 +103,18 @@ class HBNBCommand(Cmd):
 
     def do_all(self, s):
         """Print the string representation of all instances"""
+        list_class = ['BaseModel', 'User']
         my_list = s.split()
         my_dict = storage.all()
-        if len(my_list) == 1 and my_list[0] != "BaseModel":
+        if len(my_list) == 1 and my_list[0] not in list_class:
             print("** class doesn't exist **")
-        else:
+        elif len(my_list) == 0:
             for value in my_dict.copy().values():
                 print(value)
+        else:
+            for value in my_dict.copy().values():
+                if value.__class__.__name__ == my_list[0]:
+                    print(value)
 
     def help_all(self):
         """Informations about all"""
@@ -115,16 +124,17 @@ class HBNBCommand(Cmd):
         """Adding or updating attribute of an instance"""
         list = shlex.split(s, posix=False)
         dict = storage.all()
+        list_class = ['BaseModel', 'User']
         my_obj = None
         if len(list) == 0:
             print("** class name missing **")
-        elif list[0] != 'BaseModel':
+        elif list[0] not in list_class:
             print("** class doesn't exist **")
         elif len(list) == 1:
             print("** instance id missing **")
         else:
             for key, value in dict.copy().items():
-                if key == f"BaseModel.{list[1]}":
+                if key == f"{value.__class__.__name__}.{list[1]}":
                     my_obj = value
             if my_obj is None:
                 print("** no instance found **")
@@ -139,7 +149,7 @@ class HBNBCommand(Cmd):
                     setattr(my_obj, list[2], float(list[3]))
                 else:
                     setattr(my_obj, list[2], int(list[3]))
-            storage.save()
+            my_obj.save()
 
     def help_update(self):
         """Informations about update"""
