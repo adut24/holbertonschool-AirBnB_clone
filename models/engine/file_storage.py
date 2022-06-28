@@ -34,7 +34,7 @@ class FileStorage():
         try:
             with open(FileStorage.__file_path, 'r') as f:
                 dict = json.load(f)
-                for key, value in dict.items():
-                    FileStorage.__objects[key] = BaseModel(**value)
+                for k, v in dict.items():
+                    FileStorage.__objects[k] = eval(v['__class__'])(**v)
         except Exception:
             return
