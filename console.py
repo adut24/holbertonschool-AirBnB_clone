@@ -11,7 +11,6 @@ import shlex
 
 class HBNBCommand(Cmd):
     """class HBNB Command"""
-
     Cmd.prompt = "(hbnb) "
 
     def emptyline(self):
@@ -38,7 +37,8 @@ class HBNBCommand(Cmd):
     def do_create(self, s):
         """Create an instance, print its id and save it"""
         list = s.split()
-        list_class = ['BaseModel', 'User']
+        list_class = ['BaseModel', 'User', 'Place', 'State', 'City',
+                      'Amenity', 'Review']
         if len(list) < 1:
             print('** class name missing **')
         elif list[0] in list_class:
@@ -54,7 +54,8 @@ class HBNBCommand(Cmd):
 
     def do_show(self, s):
         """Show string representation of an instance"""
-        list_class =['BaseModel', 'User']
+        list_class = ['BaseModel', 'User', 'Place', 'State', 'City',
+                      'Amenity', 'Review']
         my_list = s.split()
         my_dict = storage.all()
         check = 0
@@ -80,7 +81,8 @@ class HBNBCommand(Cmd):
         """Destroy an instance with its id"""
         list = s.split()
         dict = storage.all()
-        list_class = ['BaseModel', 'User']
+        list_class = ['BaseModel', 'User', 'Place', 'State', 'City',
+                      'Amenity', 'Review']
         check = 0
         if len(list) == 0:
             print("** class name missing **")
@@ -103,7 +105,8 @@ class HBNBCommand(Cmd):
 
     def do_all(self, s):
         """Print the string representation of all instances"""
-        list_class = ['BaseModel', 'User']
+        list_class = ['BaseModel', 'User', 'Place', 'State', 'City',
+                      'Amenity', 'Review']
         my_list = s.split()
         my_dict = storage.all()
         if len(my_list) == 1 and my_list[0] not in list_class:
@@ -124,7 +127,8 @@ class HBNBCommand(Cmd):
         """Adding or updating attribute of an instance"""
         list = shlex.split(s, posix=False)
         dict = storage.all()
-        list_class = ['BaseModel', 'User']
+        list_class = ['BaseModel', 'User', 'Place', 'State', 'City',
+                      'Amenity', 'Review']
         my_obj = None
         if len(list) == 0:
             print("** class name missing **")
