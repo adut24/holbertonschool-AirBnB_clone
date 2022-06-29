@@ -171,12 +171,15 @@ class HBNBCommand(Cmd):
         print("Count the number of instances of a class\n")
 
     def default(self, s):
-        """"""
+        """Occured when no function are found"""
+        list_cmd = ['create', 'show', 'all', 'destroy', 'update', 'count']
         s = s.replace('(', '.').replace(')', '.')
         s = s.replace(',', '.').replace(' ', '.')
         s = s.replace('{', '.').replace('}', '.').replace(':', '.')
         my_list = s.split('.')
         my_list = [i for i in my_list if i != '']
+        if len(my_list) < 2 or my_list[1] not in list_cmd:
+            return
         my_list[0], my_list[1] = my_list[1], my_list[0]
         if len(my_list) > 2:
             my_list[2] = my_list[2][1:-1]
@@ -184,12 +187,16 @@ class HBNBCommand(Cmd):
                 my_list[i] = my_list[i][1:-1]
         str_cmd = (' '.join(my_list))
         if my_list[0] == 'update':
-            start_cmd = my_list[0] + ' ' + my_list[1] + ' ' + my_list[2]
-            for i in range(3, len(my_list), 2):
-                str_cmd = start_cmd + ' ' + my_list[i] + ' ' + my_list[i + 1]
-                self.onecmd(str_cmd)
+            if len(my_list) >= 3:
+                start_cmd = my_list[0] + ' ' + my_list[1] + ' ' + my_list[2]
+                for i in range(3, len(my_list), 2):
+                    str_cmd = start_cmd + ' ' + my_list[i]
+                    if i + 1 < len(my_list):
+                        str_cmd += ' ' + my_list[i + 1]
+                    self.onecmd(str_cmd)
         else:
             self.onecmd(str_cmd)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
