@@ -2,7 +2,7 @@
 """
     Console Module
 """
-from cmd import Cmd
+import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -14,9 +14,9 @@ from models.review import Review
 import shlex
 
 
-class HBNBCommand(Cmd):
+class HBNBCommand(cmd.Cmd):
     """class HBNB Command"""
-    Cmd.prompt = "(hbnb) "
+    cmd.Cmd.prompt = "(hbnb) "
     list_class = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity',
                   'Review']
 
