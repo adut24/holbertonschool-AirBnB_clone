@@ -144,7 +144,7 @@ class HBNBCommand(Cmd):
             elif len(list) == 3:
                 print("** value missing **")
             else:
-                if list[3][0] == '"':
+                if list[3][0] == '"' or list[3][0] == "'":
                     setattr(my_obj, list[2], list[3][1:-1])
                 elif '.' in list[3]:
                     setattr(my_obj, list[2], float(list[3]))
@@ -156,6 +156,40 @@ class HBNBCommand(Cmd):
         """Informations about update"""
         print("Adding or updating attribute of an instance\n")
 
+    def do_count(self, s):
+        """Count the number of instances of a class"""
+        count = 0
+        my_list = s.split()
+        my_dict = storage.all()
+        for v in my_dict.values():
+            if v.__class__.__name__ == my_list[0]:
+                count += 1
+        print(count)
+
+    def help_count(self):
+        """Informations about count"""
+        print("Count the number of instances of a class\n")
+
+    def default(self, s):
+        """"""
+        s = s.replace('(', '.').replace(')', '.')
+        s = s.replace(',', '.').replace(' ', '.')
+        s = s.replace('{', '.').replace('}', '.').replace(':', '.')
+        my_list = s.split('.')
+        my_list = [i for i in my_list if i != '']
+        my_list[0], my_list[1] = my_list[1], my_list[0]
+        if len(my_list) > 2:
+            my_list[2] = my_list[2][1:-1]
+            for i in range(3, len(my_list), 2):
+                my_list[i] = my_list[i][1:-1]
+        str_cmd = (' '.join(my_list))
+        if my_list[0] == 'update':
+            start_cmd = my_list[0] + ' ' + my_list[1] + ' ' + my_list[2]
+            for i in range(3, len(my_list), 2):
+                str_cmd = start_cmd + ' ' + my_list[i] + ' ' + my_list[i + 1]
+                self.onecmd(str_cmd)
+        else:
+            self.onecmd(str_cmd)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
