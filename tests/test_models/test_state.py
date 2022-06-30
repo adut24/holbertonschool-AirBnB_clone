@@ -14,4 +14,7 @@ class TestState(unittest.TestCase):
         self.assertEqual(a.name, '')
         a.name = 'Betty'
         self.assertEqual(a.name, 'Betty')
+        self.assertTrue(hasattr(a, 'id'))
+        self.assertTrue(hasattr(a, 'created_at'))
+        self.assertTrue(hasattr(a, 'updated_at'))
         self.assertTrue(issubclass(a.__class__, BaseModel))
