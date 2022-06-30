@@ -17,6 +17,14 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(u, "id"))
         self.assertTrue(hasattr(u, "created_at"))
         self.assertTrue(hasattr(u, "updated_at"))
+        self.assertTrue(hasattr(u, "first_name"))
+        self.assertTrue(hasattr(u, "last_name"))
+        self.assertTrue(hasattr(u, "email"))
+        self.assertTrue(hasattr(u, "password"))
+        self.assertEqual(u.first_name, "")
+        self.assertEqual(u.last_name, "")
+        self.assertEqual(u.email, "")
+        self.assertEqual(u.password, "")
         u.first_name = "Betty"
         u.last_name = "Bar"
         u.email = "airbnb@mail.com"
