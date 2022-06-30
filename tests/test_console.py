@@ -667,6 +667,9 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("BaseModel.all()")
         self.assertEqual(f.getvalue(), '')
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("NotClass.all()")
+        self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.create()")
             HBNBCommand().onecmd("BaseModel.create()")
             HBNBCommand().onecmd("BaseModel.create()")
