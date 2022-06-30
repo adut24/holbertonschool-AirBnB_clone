@@ -53,6 +53,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertIs(type(new_model.age), int)
         self.assertEqual(new_model.age, 100)
 
+    def test_save(self):
+        """Test the save() function"""
+        model = BaseModel()
+        old_date = model.updated_at
+        model.save()
+        self.assertNotEqual(old_date, model.updated_at)
+
 
 if __name__ == '__main__':
     unittest.main()
