@@ -10,6 +10,58 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """class Test for the BaseModel class"""
 
+    def test_init(self):
+        """test the constructor of BaseModel"""
+        a = BaseModel()
+        self.assertRegex(a.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(a.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(a.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        b = BaseModel(float("inf"))
+        self.assertRegex(b.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(b.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(b.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        c = BaseModel(float("NaN"))
+        self.assertRegex(c.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(c.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(c.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        d = BaseModel(4)
+        self.assertRegex(d.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(d.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(d.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        e = BaseModel([1, 2, 3, 4])
+        self.assertRegex(e.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(e.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(e.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        f = BaseModel({1, 2})
+        self.assertRegex(f.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(f.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(f.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        g = BaseModel('Hello')
+        self.assertRegex(g.id, r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}' +
+                         r'-[0-9a-f]{4}-[0-9a-f]{12}')
+        self.assertRegex(str(g.created_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+        self.assertRegex(str(g.updated_at), r'20\d{2}-\d{2}-\d{2} ' +
+                         r'\d{2}:\d{2}:\d{2}.\d{6}')
+
     def test_instantiation(self):
         """Test instantiation"""
         model = BaseModel()
@@ -52,6 +104,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_model.name, "Betty")
         self.assertIs(type(new_model.age), int)
         self.assertEqual(new_model.age, 100)
+
+    def test_str(self):
+        """test the output of the instance when printed"""
+        a = BaseModel()
+        self.assertEqual(str(a), f"[{a.__class__.__name__}] ({a.id}) " +
+                         f"{a.__dict__}")
 
     def test_save(self):
         """Test the save() function"""
