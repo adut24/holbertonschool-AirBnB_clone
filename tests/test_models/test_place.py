@@ -81,5 +81,6 @@ class TestPlace(unittest.TestCase):
         a = Place()
         self.assertEqual(str(a), f"[Place] ({a.id}) {a.__dict__}")
 
+
 if __name__ == '__main__':
     unittest.main()
