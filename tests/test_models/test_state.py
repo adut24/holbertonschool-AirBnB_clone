@@ -19,6 +19,11 @@ class TestState(unittest.TestCase):
         self.assertTrue(hasattr(a, 'updated_at'))
         self.assertTrue(issubclass(a.__class__, BaseModel))
 
+    def test_str(self):
+        """Test the string output of the class"""
+        a = State()
+        self.assertEqual(str(a), f"[State] ({a.id}) {a.__dict__}")
+
 
 if __name__ == '__main__':
     unittest.main()
