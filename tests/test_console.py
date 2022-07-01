@@ -148,6 +148,9 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("show BaseModel")
         self.assertEqual(f.getvalue(), "** instance id missing **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show BaseModel 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(f"show BaseModel {id}")
         for k, v in FileStorage._FileStorage__objects.items():
             if k == f'BaseModel.{id}':
@@ -165,6 +168,9 @@ class TestCommand(unittest.TestCase):
         output = f"[User] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show User 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create State")
         id = f.getvalue()[:-1]
         with patch('sys.stdout', new=io.StringIO()) as f:
@@ -174,6 +180,9 @@ class TestCommand(unittest.TestCase):
                 my_obj = v
         output = f"[State] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show State 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create City")
         id = f.getvalue()[:-1]
@@ -185,6 +194,9 @@ class TestCommand(unittest.TestCase):
         output = f"[City] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show City 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create Amenity")
         id = f.getvalue()[:-1]
         with patch('sys.stdout', new=io.StringIO()) as f:
@@ -194,6 +206,9 @@ class TestCommand(unittest.TestCase):
                 my_obj = v
         output = f"[Amenity] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show Amenity 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create Place")
         id = f.getvalue()[:-1]
@@ -205,6 +220,9 @@ class TestCommand(unittest.TestCase):
         output = f"[Place] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show Place 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create Review")
         id = f.getvalue()[:-1]
         with patch('sys.stdout', new=io.StringIO()) as f:
@@ -214,6 +232,9 @@ class TestCommand(unittest.TestCase):
                 my_obj = v
         output = f"[Review] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show Review 1234")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
 
     def test_show_default(self):
         """test the show command via default"""
@@ -221,6 +242,9 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(f"BaseModel.show()")
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('BaseModel.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.create()")
         id = f.getvalue()[:-1]
@@ -232,6 +256,9 @@ class TestCommand(unittest.TestCase):
         output = f"[BaseModel] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('User.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("User.create()")
         id = f.getvalue()[:-1]
         with patch('sys.stdout', new=io.StringIO()) as f:
@@ -241,6 +268,9 @@ class TestCommand(unittest.TestCase):
                 my_obj = v
         output = f"[User] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('State.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("State.create()")
         id = f.getvalue()[:-1]
@@ -252,6 +282,9 @@ class TestCommand(unittest.TestCase):
         output = f"[State] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('City.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("City.create()")
         id = f.getvalue()[:-1]
         with patch('sys.stdout', new=io.StringIO()) as f:
@@ -261,6 +294,9 @@ class TestCommand(unittest.TestCase):
                 my_obj = v
         output = f"[City] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Amenity.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Amenity.create()")
         id = f.getvalue()[:-1]
@@ -272,6 +308,9 @@ class TestCommand(unittest.TestCase):
         output = f"[Amenity] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
         with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Place.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Place.create()")
         id = f.getvalue()[:-1]
         with patch('sys.stdout', new=io.StringIO()) as f:
@@ -281,6 +320,9 @@ class TestCommand(unittest.TestCase):
                 my_obj = v
         output = f"[Place] ({id}) {my_obj.__dict__}\n"
         self.assertEqual(f.getvalue(), output)
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Review.show("1234")')
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Review.create()")
         id = f.getvalue()[:-1]
@@ -766,17 +808,349 @@ class TestCommand(unittest.TestCase):
                 all_v += str(v) + '\n'
         self.assertEqual(all, all_v)
 
+    def test_update(self):
+        """test the update command"""
+        self.setUp()
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("update")
+        self.assertEqual(f.getvalue(), "** class name missing **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("update MyModel")
+        self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("update BaseModel")
+        self.assertEqual(f.getvalue(), "** instance id missing **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("update BaseModel 121212")
+        self.assertEqual(f.getvalue(), "** no instance found **\n")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+        id = f.getvalue()[:-1]
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update BaseModel {id}")
+        self.assertEqual(f.getvalue(), "** attribute name missing **\n")
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update BaseModel {id} \"name\"")
+        self.assertEqual(f.getvalue(), "** value missing **\n")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update BaseModel {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create User")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update User {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create City")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update City {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create Place")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update Place {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create State")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update State {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create Amenity")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update Amenity {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create Review")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f"update Review {id} name \"Betty\"")
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+    def test_update_default(self):
+        """test the update command via default"""
+        self.setUp()
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('BaseModel.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.create()")
+        id = f.getvalue()[:-1]
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'BaseModel.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'BaseModel.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'BaseModel.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("User.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('User.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("User.create()")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'User.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'User.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'User.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("State.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('State.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("State.create()")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'State.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'State.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'State.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("City.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('City.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("City.create()")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'City.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'City.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'City.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Amenity.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.create()")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Amenity.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Amenity.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Amenity.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Place.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Place.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Place.create()")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Place.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Place.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Place.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Review.update()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Review.update("Bar")')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Review.create()")
+        id = f.getvalue()[:-1]
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Review.update("{id}"')
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Review.update("{id}", "name"')
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(f'Review.update("{id}", "name", "Betty"')
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Betty")
+
+    def test_update_default_dict(self):
+        """test the update command via default with a dictionary"""
+        self.setUp()
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.create()")
+        id = f.getvalue()[:-1]
+        input = 'BaseModel.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("User.create()")
+        id = f.getvalue()[:-1]
+        input = 'User.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("State.create()")
+        id = f.getvalue()[:-1]
+        input = 'State.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("City.create()")
+        id = f.getvalue()[:-1]
+        input = 'City.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Place.create()")
+        id = f.getvalue()[:-1]
+        input = 'Place.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.create()")
+        id = f.getvalue()[:-1]
+        input = 'Amenity.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("Review.create()")
+        id = f.getvalue()[:-1]
+        input = 'Review.update("{}", {})'.format(id,
+                                                    {"name": "Joe", "age": 89})
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd(input)
+        for v in FileStorage._FileStorage__objects.values():
+            if v.id == id:
+                self.assertEqual(v.name, "Joe")
+                self.assertEqual(v.age, 89)
+
     def test_quit(self):
         """test the quit command"""
         with self.assertRaises(SystemExit):
             with patch('sys.stdout', new=io.StringIO()) as f:
                 HBNBCommand().onecmd("quit")
+        with self.assertRaises(SystemExit):
+            with patch('sys.stdout', new=io.StringIO()) as f:
+                HBNBCommand().onecmd("quit show")
 
     def test_EOF(self):
         """test with EOF"""
         with self.assertRaises(SystemExit):
             with patch('sys.stdout', new=io.StringIO()) as f:
                 HBNBCommand().onecmd("EOF")
+        with self.assertRaises(SystemExit):
+            with patch('sys.stdout', new=io.StringIO()) as f:
+                HBNBCommand().onecmd("EOF create")
 
     def test_empty_line(self):
         """test with an empty line"""
@@ -788,7 +1162,7 @@ class TestCommand(unittest.TestCase):
         """test with a non existing command"""
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("hello")
-        self.assertEqual(f.getvalue(), "")
+        self.assertEqual(f.getvalue(), "*** Unknown syntax: hello\n")
 
 
 if __name__ == '__main__':
