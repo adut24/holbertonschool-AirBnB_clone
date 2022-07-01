@@ -1066,7 +1066,7 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("User.create()")
         id = f.getvalue()[:-1]
         input = 'User.update("{}", {})'.format(id,
-                                                    {"name": "Joe", "age": 89})
+                                               {"name": "Joe", "age": 89})
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(input)
         for v in FileStorage._FileStorage__objects.values():
@@ -1078,7 +1078,7 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("State.create()")
         id = f.getvalue()[:-1]
         input = 'State.update("{}", {})'.format(id,
-                                                    {"name": "Joe", "age": 89})
+                                                {"name": "Joe", "age": 89})
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(input)
         for v in FileStorage._FileStorage__objects.values():
@@ -1090,7 +1090,7 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("City.create()")
         id = f.getvalue()[:-1]
         input = 'City.update("{}", {})'.format(id,
-                                                    {"name": "Joe", "age": 89})
+                                               {"name": "Joe", "age": 89})
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(input)
         for v in FileStorage._FileStorage__objects.values():
@@ -1102,7 +1102,7 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("Place.create()")
         id = f.getvalue()[:-1]
         input = 'Place.update("{}", {})'.format(id,
-                                                    {"name": "Joe", "age": 89})
+                                                {"name": "Joe", "age": 89})
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(input)
         for v in FileStorage._FileStorage__objects.values():
@@ -1114,7 +1114,7 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("Amenity.create()")
         id = f.getvalue()[:-1]
         input = 'Amenity.update("{}", {})'.format(id,
-                                                    {"name": "Joe", "age": 89})
+                                                  {"name": "Joe", "age": 89})
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(input)
         for v in FileStorage._FileStorage__objects.values():
@@ -1126,7 +1126,7 @@ class TestCommand(unittest.TestCase):
             HBNBCommand().onecmd("Review.create()")
         id = f.getvalue()[:-1]
         input = 'Review.update("{}", {})'.format(id,
-                                                    {"name": "Joe", "age": 89})
+                                                 {"name": "Joe", "age": 89})
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd(input)
         for v in FileStorage._FileStorage__objects.values():
