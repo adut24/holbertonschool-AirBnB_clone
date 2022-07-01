@@ -3,6 +3,8 @@
     Console Module
 """
 import cmd
+
+from pyparsing import line_start
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -24,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing when Enter"""
         pass
 
-    def do_quit(self, s):
+    def do_quit(self, line):
         """Quit the console"""
         exit()
 
@@ -32,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         """Informations about quit"""
         print('Quit command to exit the program\n')
 
-    def do_EOF(self, s):
+    def do_EOF(self, line):
         """Quit the console"""
         print()
         exit()
@@ -41,9 +43,9 @@ class HBNBCommand(cmd.Cmd):
         """Informations about EOF"""
         print('Ctrl + D to exit the program\n')
 
-    def do_create(self, s):
+    def do_create(self, line):
         """Create an instance, print its id and save it"""
-        list = s.split()
+        list = line.split()
         if len(list) < 1:
             print('** class name missing **')
         elif list[0] in self.list_class:
@@ -57,9 +59,9 @@ class HBNBCommand(cmd.Cmd):
         """Informations about create"""
         print('Create an instance, print its id and save it\n')
 
-    def do_show(self, s):
+    def do_show(self, line):
         """Show string representation of an instance"""
-        my_list = s.split()
+        my_list = line.split()
         my_dict = storage.all()
         check = 0
         if len(my_list) == 0:
@@ -80,9 +82,9 @@ class HBNBCommand(cmd.Cmd):
         """Informations about show"""
         print('Show string representation of an instance\n')
 
-    def do_destroy(self, s):
+    def do_destroy(self, line):
         """Destroy an instance with its id"""
-        list = s.split()
+        list = line.split()
         dict = storage.all()
         check = 0
         if len(list) == 0:
@@ -104,9 +106,9 @@ class HBNBCommand(cmd.Cmd):
         """Informations about destroy"""
         print('Destroy an instance with its id\n')
 
-    def do_all(self, s):
+    def do_all(self, line):
         """Print the string representation of all instances"""
-        my_list = s.split()
+        my_list = line.split()
         my_dict = storage.all()
         if len(my_list) == 1 and my_list[0] not in self.list_class:
             print("** class doesn't exist **")
@@ -122,9 +124,9 @@ class HBNBCommand(cmd.Cmd):
         """Informations about all"""
         print("Print the string representation of all instances\n")
 
-    def do_update(self, s):
+    def do_update(self, line):
         """Adding or updating attribute of an instance"""
-        list = shlex.split(s, posix=False)
+        list = shlex.split(line, posix=False)
         dict = storage.all()
         my_obj = None
         if len(list) == 0:
@@ -150,16 +152,16 @@ class HBNBCommand(cmd.Cmd):
                     setattr(my_obj, list[2], float(list[3]))
                 else:
                     setattr(my_obj, list[2], int(list[3]))
-            my_obj.save()
+                my_obj.save()
 
     def help_update(self):
         """Informations about update"""
         print("Adding or updating attribute of an instance\n")
 
-    def do_count(self, s):
+    def do_count(self, line):
         """Count the number of instances of a class"""
         count = 0
-        my_list = s.split()
+        my_list = line.split()
         my_dict = storage.all()
         for v in my_dict.values():
             if v.__class__.__name__ == my_list[0]:
@@ -170,15 +172,16 @@ class HBNBCommand(cmd.Cmd):
         """Informations about count"""
         print("Count the number of instances of a class\n")
 
-    def default(self, s):
+    def default(self, line):
         """Occured when no function are found"""
         list_cmd = ['create', 'show', 'all', 'destroy', 'update', 'count']
-        s = s.replace('(', '.').replace(')', '.')
+        s = line.replace('(', '.').replace(')', '.')
         s = s.replace(',', '.').replace(' ', '.')
         s = s.replace('{', '.').replace('}', '.').replace(':', '.')
         my_list = s.split('.')
         my_list = [i for i in my_list if i != '']
         if len(my_list) < 2 or my_list[1] not in list_cmd:
+            print(f"*** Unknown syntax: {line}")
             return
         my_list[0], my_list[1] = my_list[1], my_list[0]
         if len(my_list) > 2:
@@ -187,13 +190,18 @@ class HBNBCommand(cmd.Cmd):
                 my_list[i] = my_list[i][1:-1]
         str_cmd = (' '.join(my_list))
         if my_list[0] == 'update':
-            if len(my_list) >= 3:
+            if len(my_list) > 3:
                 start_cmd = my_list[0] + ' ' + my_list[1] + ' ' + my_list[2]
                 for i in range(3, len(my_list), 2):
                     str_cmd = start_cmd + ' ' + my_list[i]
                     if i + 1 < len(my_list):
                         str_cmd += ' ' + my_list[i + 1]
                     self.onecmd(str_cmd)
+            elif len(my_list) == 3:
+                str_cmd = (' '.join(my_list))
+                self.onecmd(str_cmd)
+            else:
+                self.onecmd(str_cmd)
         else:
             self.onecmd(str_cmd)
 
