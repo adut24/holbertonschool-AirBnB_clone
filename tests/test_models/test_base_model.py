@@ -111,12 +111,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(str(a), f"[{a.__class__.__name__}] ({a.id}) " +
                          f"{a.__dict__}")
 
-    def test_save(self):
-        """Test the save() function"""
-        model = BaseModel()
-        old_date = model.updated_at
-        model.save()
-        self.assertNotEqual(old_date, model.updated_at)
+    
 
 
 if __name__ == '__main__':
