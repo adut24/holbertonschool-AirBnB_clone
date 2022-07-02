@@ -111,7 +111,19 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(str(a), f"[{a.__class__.__name__}] ({a.id}) " +
                          f"{a.__dict__}")
 
-    
+    def test_save(self):
+        """Test the save() function"""
+        model = BaseModel()
+        model.name = "Betty"
+        model.age = 100
+        id = model.id
+        old_date = model.updated_at
+        model.save()
+        self.assertNotEqual(old_date, model.updated_at)
+        self.assertEqual(model.name, "Betty")
+        self.assertEqual(model.age, 100)
+        with open("file.json", "r") as f:
+            self.assertIn("BaseModel." + id, f.read())
 
 
 if __name__ == '__main__':
