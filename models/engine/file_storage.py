@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    Module File Storage
+    Module that define the FileStorage class
 """
 import json
 from models.base_model import BaseModel
@@ -13,7 +13,8 @@ from models.review import Review
 
 
 class FileStorage():
-    """Class File Storage"""
+    """Class that serializes instances to a JSON file and deserializes JSON
+    file to instances"""
 
     __file_path = 'file.json'
     __objects = {}
