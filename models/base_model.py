@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    Base model module
+    Module that define the BaseModel class
 """
 import uuid
 from datetime import datetime
@@ -8,7 +8,8 @@ import models
 
 
 class BaseModel:
-    """BaseModel class"""
+    """Class that defines all common attributes/methods for other classes"""
+
     def __init__(self, *args, **kwargs):
         """Constructor method"""
         if len(kwargs) > 0:
