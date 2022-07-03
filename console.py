@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             for k, v in my_dict.items():
-                if k == f"{v.__class__.__name__}.{my_list[1]}":
+                if k == f"{my_list[0]}.{my_list[1]}":
                     print(v)
                     check = 1
             if check == 0:
@@ -93,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             for k, v in dict.copy().items():
-                if k == f"{v.__class__.__name__}.{list[1]}":
+                if k == f"{list[0]}.{list[1]}":
                     dict.pop(k)
                     storage.save()
                     check = 1
@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             for key, value in dict.copy().items():
-                if key == f"{value.__class__.__name__}.{list[1]}":
+                if key == f"{list[0]}.{list[1]}":
                     my_obj = value
             if my_obj is None:
                 print("** no instance found **")
