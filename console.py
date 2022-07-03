@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
-    Console Module
+    Console Module from which everything is done
 """
 import cmd
 from models import storage
+import shlex
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -11,7 +12,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.state import State
 from models.review import Review
-import shlex
 
 
 class HBNBCommand(cmd.Cmd):
@@ -21,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
                   'Review']
 
     def emptyline(self):
-        """Do nothing when Enter"""
+        """Do nothing when Enter is pressed"""
         pass
 
     def do_quit(self, line):
@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
         elif my_list[0] not in self.list_class:
             print("** class doesn't exist **")
         else:
-            for k, v in my_dict.copy().items():
+            for k, v in my_dict.items():
                 if k == f"{v.__class__.__name__}.{my_list[1]}":
                     print(v)
                     check = 1
@@ -108,15 +108,18 @@ class HBNBCommand(cmd.Cmd):
         """Print the string representation of all instances"""
         my_list = line.split()
         my_dict = storage.all()
+        list_value = []
         if len(my_list) == 1 and my_list[0] not in self.list_class:
             print("** class doesn't exist **")
         elif len(my_list) == 0:
             for value in my_dict.copy().values():
-                print(value)
+                list_value.append(str(value))
+            print(list_value)
         else:
             for value in my_dict.copy().values():
                 if value.__class__.__name__ == my_list[0]:
-                    print(value)
+                    list_value.append(str(value))
+            print(list_value)
 
     def help_all(self):
         """Informations about all"""

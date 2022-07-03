@@ -612,7 +612,7 @@ class TestCommand(unittest.TestCase):
         self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all")
-        self.assertEqual(f.getvalue(), "")
+        self.assertEqual(f.getvalue(), "[]\n")
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
@@ -620,31 +620,31 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all BaseModel")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "BaseModel":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create User")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all User")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "User":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all City")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "City":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create State")
@@ -652,11 +652,11 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all State")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "State":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create Place")
@@ -665,11 +665,11 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all Place")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "Place":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create Amenity")
@@ -677,37 +677,37 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all Amenity")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "Amenity":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("create Review")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all Review")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "Review":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("all")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
-            all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+            all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
     def test_all_default(self):
         """test the all command via default"""
         self.setUp()
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("NotClass.all()")
         self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
@@ -718,41 +718,47 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "BaseModel":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("User.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("User.create()")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("User.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "User":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("State.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("State.create()")
             HBNBCommand().onecmd("State.create()")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("State.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "State":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("City.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("City.create()")
             HBNBCommand().onecmd("City.create()")
@@ -760,41 +766,47 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("City.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "City":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Amenity.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Amenity.create()")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Amenity.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "Amenity":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Place.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Place.create()")
             HBNBCommand().onecmd("Place.create()")
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Place.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "Place":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Review.all()")
-        self.assertEqual(f.getvalue(), '')
+        self.assertEqual(f.getvalue(), '[]\n')
+
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Review.create()")
             HBNBCommand().onecmd("Review.create()")
@@ -802,11 +814,11 @@ class TestCommand(unittest.TestCase):
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd("Review.all()")
         all = f.getvalue()
-        all_v = ""
+        all_v = []
         for v in FileStorage._FileStorage__objects.values():
             if v.__class__.__name__ == "Review":
-                all_v += str(v) + '\n'
-        self.assertEqual(all, all_v)
+                all_v.append(str(v))
+        self.assertEqual(all, f'{all_v}\n')
 
     def test_update(self):
         """test the update command"""
