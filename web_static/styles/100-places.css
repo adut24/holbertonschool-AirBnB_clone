@@ -21,7 +21,7 @@ article {
 	justify-content: center;
 }
 
-article h2 {
+article > h2 {
 	font-size: 30px;
 	display: flex;
 	position: absolute;
@@ -103,7 +103,6 @@ article .amenities {
 
 article .amenities h2,
 .reviews h2 {
-	width: 390px;
 	font-size: 16px;
 	border-bottom: 1px solid #DDDDDD;
 	padding-bottom: 5px;
@@ -113,8 +112,7 @@ article .amenities ul {
 	margin-top: -20px;
 }
 
-.reviews h2,
-.reviews ul {
+.reviews h2 {
 	margin-top: -40px;
 }
 
