@@ -18,7 +18,7 @@ button {
 	position: relative;
 	margin-right: 30px;
 	align-self: center;
-	margin-left: auto;
+	margin-left: auto
 }
 
 button:hover {
@@ -106,6 +106,10 @@ li:last-child {
 	.amenities {
 		width: 100%;
 		align-items: center;
+	}
+
+	.locations {
+		border-bottom: 1px solid #DDDDDD;
 	}
 
 	button {
