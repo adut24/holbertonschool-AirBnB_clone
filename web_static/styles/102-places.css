@@ -105,6 +105,10 @@ article .amenities {
 	flex-flow: column wrap;
 }
 
+.reviews {
+	margin-top: -70px;
+}
+
 article .amenities h2,
 .reviews h2 {
 	width: 100%;
